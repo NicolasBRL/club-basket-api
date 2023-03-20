@@ -24,11 +24,13 @@ class ClubController extends Controller
         $request->validate([
             'nameClub' => 'required|max:100',
         ]);
+        
         $club = Club::create([
             'nameClub' => $request->nameClub,
         ]);
         return response()->json([
-            'status' => 'Success', 'data' => $club,
+            'status' => 'Success', 
+            'data' => $club,
         ]);
     }
 

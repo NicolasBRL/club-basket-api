@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clubs', function (Blueprint $table) {
-            $table->id();
-            $table->string('nameClub');
-            $table->timestamps();
+        Schema::table('players', function (Blueprint $table) {
+            $table->string('photoPlayer')->nullable();
         });
     }
 
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clubs');
+        Schema::table('players', function (Blueprint $table) {
+            //
+        });
     }
 };

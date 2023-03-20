@@ -12,7 +12,9 @@ class PlayerController extends Controller
     public function index()
     {
         // On récupère tous les joueurs
-        $players = DB::table('players')->get()
+        $players = DB::table('players')
+            ->join('clubs', 'clubs.id', '=', 'players.club_id')
+            ->get()
             ->toArray();
         // On retourne les informations des utilisateurs en JSON
         return response()->json([
@@ -23,11 +25,18 @@ class PlayerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'firstName' => 'required|max:100', 'lastName' => 'required|max:100', 'height' => 'required|max:100', 'position' => 'required|max:100',
+            'firstName' => 'required|max:100', 
+            'lastName' => 'required|max:100', 
+            'height' => 'required|max:100', 
+            'position' => 'required|max:100',
         ]);
         // On crée un nouvel utilisateur
         $player = Player::create([
-            'firstName' => $request->firstName, 'lastName' => $request->lastName, 'height' => $request->height, 'position' => $request->position,
+            'firstName' => $request->firstName, 
+            'lastName' => $request->lastName, 
+            'height' => $request->height, 
+            'position' => $request->position,
+            'club_id' => $request->club_id,
         ]);
         // On retourne les informations du nouvel utilisateur en JSON
         return response()->json([
@@ -45,11 +54,19 @@ class PlayerController extends Controller
     {
         $this->validate($request, [
             'firstname' => 'required|max:100',
-            'lastname' => 'required|max:100', 'height' => 'required|max:100', 'position' => 'required|max:100',
+            'lastname' => 'required|max:100', 
+            'height' => 'required|max:100', 
+            'position' => 'required|max:100',
         ]);
+        
         // On crée un nouvel utilisateur
         $player->update([
-            'firstname' => $request->firstname, 'lastname' => $request->lastname, 'height' => $request->height, 'lastname' => $request->lastname, 'position' => $request->position,
+            'firstname' => $request->firstname, 
+            'lastname' => $request->lastname, 
+            'height' => $request->height, 
+            'lastname' => $request->lastname, 
+            'position' => $request->position,
+            'club_id' => $request->club_id,
         ]);
         // On retourne les informations du nouvel utilisateur en JSON
         return response()->json([
